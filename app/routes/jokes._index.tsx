@@ -1,10 +1,24 @@
+import { json, useLoaderData } from "@remix-run/react";
+import { db } from "~/utils/db.server";
+
+export async function loader() {
+ const count = await db.joke.count();
+ const randomRowNumber = Math.floor(Math.random() * count);
+ const [randomJoke] = await db.joke.findMany({
+   skip: randomRowNumber,
+   take: 1,
+ });
+ return json({ randomJoke });
+}
+
 export default function JokesIndexRoute() {
+  const data = useLoaderData<typeof loader>();
+
   return (
     <div>
-      <p>Here&apos;s a random joke:</p>
+      <strong>Here&apos;s a random joke:</strong>
       <p>
-        I was wondering why the frisbee was getting bigger,
-        then it hit me.
+        {data.randomJoke.content}
       </p>
     </div>
   );
