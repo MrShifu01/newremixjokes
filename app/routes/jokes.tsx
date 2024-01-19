@@ -1,9 +1,12 @@
-import { Outlet } from "@remix-run/react"
+import { Outlet } from "@remix-run/react";
 
-function Jokes() {
+export default function JokesRoute() {
   return (
-    <div><Outlet/></div>
-  )
+    <div>
+      <h1>J🤪KES</h1>
+      <main>
+        <Outlet />
+      </main>
+    </div>
+  );
 }
-
-export default Jokes
